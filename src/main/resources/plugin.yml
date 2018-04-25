@@ -1,0 +1,5 @@
+name: BungeeMSG
+main: me.fadishawki.bungeemsg.spigot.SpigotBridge
+authors: [Fadi Shawki]
+version: 1.0.0
+commands:
