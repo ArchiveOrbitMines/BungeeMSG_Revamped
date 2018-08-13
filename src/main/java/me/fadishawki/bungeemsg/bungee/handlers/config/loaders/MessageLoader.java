@@ -27,17 +27,17 @@ public class MessageLoader extends ConfigLoader {
 
     @Override
     public boolean load(Configuration configuration, String path) {
-        List<Message.Type> types = new ArrayList<>();
+        List<Message.Instance> instances = new ArrayList<>();
 
 
-        //TODO MOVE THESE TO ENUM -> Change Message.Type to Message.Insance, Message.Type -> Enum
+        //TODO MOVE THESE TO ENUM -> Change Message.Instance to Message.Insance, Message.Instance -> Enum
         //TODO switch through all Enum values
 
         /* ChatMessage */
         if (configuration.contains(path + ".Message")) {
             String message = Utils.color(configuration.getString(path + ".Message"));
 
-            types.add(new ChatMessage(message) {
+            instances.add(new ChatMessage(message) {
                 @Override
                 public void adjustFilter(Filter filter) {
                     throw new IllegalStateException();
@@ -62,7 +62,7 @@ public class MessageLoader extends ConfigLoader {
                 messageList.add(Utils.color(message));
             }
 
-            types.add(new MessageList(messageList) {
+            instances.add(new MessageList(messageList) {
                 @Override
                 public void adjustFilter(Filter filter) {
                     throw new IllegalStateException();
@@ -87,7 +87,7 @@ public class MessageLoader extends ConfigLoader {
                 messageList.add(Utils.color(message));
             }
 
-            types.add(new MessageList(messageList) {
+            instances.add(new MessageList(messageList) {
                 @Override
                 public void adjustFilter(Filter filter) {
                     throw new IllegalStateException();

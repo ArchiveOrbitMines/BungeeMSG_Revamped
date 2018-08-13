@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 import java.util.Collection;
 import java.util.Collections;
 
-public class Title implements Message.Type {
+public class Title implements Message.Instance {
 
     private String title;
     private String subTitle;
@@ -26,6 +26,11 @@ public class Title implements Message.Type {
         this.fadeIn = fadeIn;
         this.stay = stay;
         this.fadeOut = fadeOut;
+    }
+
+    @Override
+    public Message.Type getType() {
+        return Message.Type.TITLE;
     }
 
     /* OVERRIDABLE METHODS */

@@ -9,7 +9,7 @@ import me.fadishawki.bungeemsg.bungee.handlers.server.BungeeServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.json.simple.JSONObject;
 
-public class ChatMessage implements Message.Type {
+public class ChatMessage implements Message.Instance {
 
     private String message;
 
@@ -17,6 +17,10 @@ public class ChatMessage implements Message.Type {
         this.message = message;
     }
 
+    @Override
+    public Message.Type getType() {
+        return Message.Type.CHAT;
+    }
 
     @Override
     public boolean send(Receiver receiver) {

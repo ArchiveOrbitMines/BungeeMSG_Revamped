@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageList implements Message.Type {
+public class MessageList implements Message.Instance {
 
     private List<ChatMessage> messages;
 
@@ -18,6 +18,11 @@ public class MessageList implements Message.Type {
         for (String message : messages) {
             this.messages.add(new ChatMessage(message));
         }
+    }
+
+    @Override
+    public Message.Type getType() {
+        return Message.Type.MESSAGE_LIST;
     }
 
     @Override

@@ -1,35 +1,32 @@
 package me.fadishawki.bungeemsg.bungee.handlers;
 
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
-import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
 import org.json.simple.JSONObject;
-
-import java.util.List;
 
 public class Message {
 
     private Receiver receiver;
     private Sender sender;
 
-    private Message.Type[] types;
+    private Instance[] instances;
 
-    public Message(Sender sender, Receiver receiver, Message.Type... types){
+    public Message(Sender sender, Receiver receiver, Instance... instances){
         this.receiver = receiver;
         this.sender =  sender;
-        this.types = types;
+        this.instances = instances;
     }
 
     /* MESSAGE - METHODS */
     public void adjustFilter(Filter filter){
-        for(Type type : types){
-            type.adjustFilter(filter);
+        for(Instance instance : instances){
+            instance.adjustFilter(filter);
         }
     }
 
     public boolean send(){
         boolean sent = true;
-        for(Type type : types){
-            sent = type.send(receiver);
+        for(Instance instance : instances){
+            sent = instance.send(receiver);
         }
         return sent;
     }
@@ -43,13 +40,24 @@ public class Message {
         return sender;
     }
 
-    public interface Type {
+    public interface Instance {
+
+        Type getType();
 
         boolean send(Receiver receiver);
 
         boolean adjustFilter(Filter filter);
 
         JSONObject serialize();
+
+    }
+
+    public enum Type {
+
+        CHAT,
+        ACTION_BAR,
+        MESSAGE_LIST,
+        TITLE;
 
     }
 }

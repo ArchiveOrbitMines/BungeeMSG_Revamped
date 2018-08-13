@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActionBar implements Message.Type {
+public class ActionBar implements Message.Instance {
 
     private String message;
 
@@ -30,6 +30,11 @@ public class ActionBar implements Message.Type {
 
     public ActionBar(String message){
         this.message = message;
+    }
+
+    @Override
+    public Message.Type getType() {
+        return Message.Type.ACTION_BAR;
     }
 
     @Override
