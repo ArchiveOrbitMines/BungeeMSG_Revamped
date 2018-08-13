@@ -11,7 +11,6 @@ import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
 import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
 import me.fadishawki.bungeemsg.bungee.handlers.server.BungeeServer;
 import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.SkinConfiguration;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.json.simple.JSONObject;
 
@@ -65,5 +64,10 @@ public class ActionBar implements Message.Type {
     /* SETTERS */
     public void setStay(int stay) {
         this.stay = stay;
+    }
+
+    private class Instance {
+
+        
     }
 }

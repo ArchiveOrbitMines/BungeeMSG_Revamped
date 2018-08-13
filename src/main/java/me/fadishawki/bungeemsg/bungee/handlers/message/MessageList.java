@@ -12,15 +12,19 @@ public class MessageList implements Message.Type {
 
     private List<ChatMessage> messages;
 
-    public MessageList(List<ChatMessage> messages) {
+    public MessageList(List<String> messages) {
         this.messages = new ArrayList<>();
+
+        for (String message : messages) {
+            this.messages.add(new ChatMessage(message));
+        }
     }
 
     @Override
     public boolean send(Receiver receiver) {
         boolean sent = true;
-        for(ChatMessage message : messages){
-            if(!message.send(receiver)){
+        for (ChatMessage message : messages) {
+            if (!message.send(receiver)) {
                 sent = false;
             }
         }
@@ -30,7 +34,7 @@ public class MessageList implements Message.Type {
     @Override
     public boolean adjustFilter(Filter filter) {
         boolean modified = false;
-        for(ChatMessage message : messages){
+        for (ChatMessage message : messages) {
             modified = message.adjustFilter(filter);
         }
         return modified;
@@ -41,7 +45,7 @@ public class MessageList implements Message.Type {
         return null; //TODO!
     }
 
-    public void addChatMessage(ChatMessage message){
+    public void addChatMessage(ChatMessage message) {
         this.messages.add(message);
     }
 }
