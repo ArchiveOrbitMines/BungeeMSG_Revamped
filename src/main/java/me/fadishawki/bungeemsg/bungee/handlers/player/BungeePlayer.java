@@ -2,6 +2,7 @@ package me.fadishawki.bungeemsg.bungee.handlers.player;
 
 import me.fadishawki.bungeemsg.bungee.handlers.Message;
 import me.fadishawki.bungeemsg.bungee.handlers.Receiver;
+import me.fadishawki.bungeemsg.bungee.handlers.Sender;
 import me.fadishawki.bungeemsg.bungee.handlers.channel.Channel;
 import me.fadishawki.bungeemsg.bungee.handlers.server.BungeeServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class BungeePlayer implements Receiver {
+public class BungeePlayer implements Receiver, Sender {
 
     private static List<BungeePlayer> players = new ArrayList<>();
 
@@ -50,7 +51,7 @@ public class BungeePlayer implements Receiver {
 
     /* OVERRIDABLE METHODS */
     @Override
-    public void receiveMessage(Message message) {
+    public boolean receive(Message message) {
 
     }
 
@@ -60,8 +61,10 @@ public class BungeePlayer implements Receiver {
     }
 
     /* MESSAGE METHODS */
-    public void sendMessage(Message message) {
+    @Override
+    public boolean send(Message message) {
 
+        return false;
     }
 
     /* STATIC METHODS */

@@ -2,13 +2,16 @@ package me.fadishawki.bungeemsg.bungee.handlers;
 
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
 import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
+import org.json.simple.JSONObject;
+
+import java.util.List;
 
 public class Message {
 
     private Receiver receiver;
     private BungeePlayer sender;
 
-    private String message;
+    private List<Type> types;
 
     private boolean modified;
 
@@ -18,7 +21,7 @@ public class Message {
         this.sender =  sender;
     }
     
-    public void adjustFiler(Filter filter){
+    public void adjustFilter(Filter filter){
         this.message = filter.getMessage(message);
         this.modified = filter.isModified(message);
     }
@@ -37,5 +40,15 @@ public class Message {
 
     public boolean isFiltered() {
         return modified;
+    }
+
+    public interface Type {
+
+        boolean send(Receiver receiver);
+
+        void adjustFilter(Filter filter);
+
+        JSONObject serialize();
+
     }
 }

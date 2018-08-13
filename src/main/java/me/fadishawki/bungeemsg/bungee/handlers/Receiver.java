@@ -2,7 +2,7 @@ package me.fadishawki.bungeemsg.bungee.handlers;
 
 public interface Receiver {
 
-    void receiveMessage(Message message);
+    boolean receive(Message message);
 
     Type getType();
 
