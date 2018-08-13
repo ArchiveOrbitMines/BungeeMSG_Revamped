@@ -1,5 +1,6 @@
 package me.fadishawki.bungeemsg.bungee.handlers;
 
+import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
 import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
 
 public class Message {
@@ -17,10 +18,9 @@ public class Message {
         this.sender =  sender;
     }
     
-    public boolean adjustFiler(){
-        this.modified = true;
-        return false;
-        //TODO!
+    public void adjustFiler(Filter filter){
+        this.message = filter.getMessage(message);
+        this.modified = filter.isModified(message);
     }
 
     public String getMessage(){
@@ -35,7 +35,7 @@ public class Message {
         return sender;
     }
 
-    public boolean isModified() {
+    public boolean isFiltered() {
         return modified;
     }
 }

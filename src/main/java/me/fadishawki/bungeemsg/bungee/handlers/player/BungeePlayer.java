@@ -19,20 +19,18 @@ public class BungeePlayer implements Receiver {
 
     private ProxiedPlayer player;
 
-    private String name;
-
     public BungeePlayer(ProxiedPlayer player){
         this.player = player;
     }
 
     /*JOIN & LEAVE METHODS*/
-    public void connect(BungeeServer server){
-        if(server != null){
+    public void connect(BungeeServer server) {
+        if (server != null) {
             disconnect();
         }
         this.server = server;
-        if(server != null){
-        player.setReconnectServer(server.getServer());
+        if (server != null) {
+            player.setReconnectServer(server.getServer());
         }
     }
 
@@ -46,34 +44,30 @@ public class BungeePlayer implements Receiver {
         return player;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public BungeeServer getConnectedServer(){
         return server;
     }
 
     /* OVERRIDABLE METHODS */
     @Override
+    public void receiveMessage(Message message) {
+
+    }
+
+    @Override
+    public Type getType() {
+        return Type.PLAYER;
+    }
+
+    /* MESSAGE METHODS */
     public void sendMessage(Message message) {
 
-    }
-
-    @Override
-    public boolean isChannel() {
-        return false;
-    }
-
-    @Override
-    public boolean isPlayer() {
-        return true;
     }
 
     /* STATIC METHODS */
     public static BungeePlayer getPlayer(String name){
         for(BungeePlayer player : players){
-            if(name.equals(player.getName())){
+            if(name.equals(player.getPlayer().getName())){
                 return player;
             }
         }

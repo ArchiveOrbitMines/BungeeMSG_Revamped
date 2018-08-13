@@ -18,20 +18,23 @@ public class Channel implements Receiver {
         this.players = new ArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public List<BungeePlayer> getPlayers() {
+        return players;
+    }
+
     @Override
-    public void sendMessage(Message message) {
+    public void receiveMessage(Message message) {
         for(BungeePlayer player : players){
             player.sendMessage(message);
         }
     }
 
     @Override
-    public boolean isChannel() {
-        return true;
-    }
-
-    @Override
-    public boolean isPlayer() {
-        return false;
+    public Type getType() {
+        return Type.CHANNEL;
     }
 }

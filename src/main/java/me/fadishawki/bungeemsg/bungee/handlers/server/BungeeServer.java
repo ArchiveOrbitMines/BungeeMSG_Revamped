@@ -1,5 +1,7 @@
 package me.fadishawki.bungeemsg.bungee.handlers.server;
 
+import me.fadishawki.bungeemsg.bungee.handlers.Message;
+import me.fadishawki.bungeemsg.bungee.handlers.Receiver;
 import me.fadishawki.bungeemsg.bungee.handlers.channel.Channel;
 import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
 import net.md_5.bungee.api.config.ServerInfo;
@@ -7,7 +9,7 @@ import net.md_5.bungee.api.config.ServerInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BungeeServer {
+public class BungeeServer implements Receiver {
 
     private List<BungeePlayer> players;
 
@@ -24,6 +26,7 @@ public class BungeeServer {
         this.name = name;
     }
 
+    /* PLAYER METHODS */
     public void join(BungeePlayer player){
         players.add(player);
     }
@@ -32,7 +35,7 @@ public class BungeeServer {
         players.remove(player);
     }
 
-
+    /* GETTERS */
     public Channel getServerChannel() {
         return serverChannel;
     }
@@ -43,5 +46,16 @@ public class BungeeServer {
 
     public ServerInfo getServer() {
         return server;
+    }
+
+    /* OVERRIDABLE MESSAGES */
+    @Override
+    public void receiveMessage(Message message) {
+        serverChannel.receiveMessage(message);
+    }
+
+    @Override
+    public Type getType() {
+        return Type.SERVER;
     }
 }
