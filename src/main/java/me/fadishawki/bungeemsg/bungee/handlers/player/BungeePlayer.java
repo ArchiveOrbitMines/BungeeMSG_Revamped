@@ -24,14 +24,15 @@ public class BungeePlayer implements Receiver, Sender {
         this.player = player;
     }
 
-    /*JOIN & LEAVE METHODS*/
+    /* JOIN & LEAVE METHODS */
     public void connect(BungeeServer server) {
-        if (server != null) {
-            disconnect();
+        if (this.server != null) {
+            this.disconnect();
         }
         this.server = server;
-        if (server != null) {
-            player.setReconnectServer(server.getServer());
+        if (this.server != null) {
+            this.player.setReconnectServer(server.getServer());
+            this.currentChannel = server.getServerChannel();
         }
     }
 
@@ -41,7 +42,7 @@ public class BungeePlayer implements Receiver, Sender {
     }
 
     /* GETTERS */
-    public ProxiedPlayer getPlayer() {
+    public ProxiedPlayer getPlayer(){
         return player;
     }
 
@@ -49,10 +50,15 @@ public class BungeePlayer implements Receiver, Sender {
         return server;
     }
 
+    public Channel getCurrentChannel() {
+        return currentChannel;
+    }
+
     /* OVERRIDABLE METHODS */
     @Override
     public boolean receive(Message message) {
 
+        return false;
     }
 
     @Override
@@ -60,11 +66,9 @@ public class BungeePlayer implements Receiver, Sender {
         return Type.PLAYER;
     }
 
-    /* MESSAGE METHODS */
     @Override
     public boolean send(Message message) {
-
-        return false;
+        return message.send();
     }
 
     /* STATIC METHODS */

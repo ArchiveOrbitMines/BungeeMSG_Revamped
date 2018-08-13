@@ -50,8 +50,8 @@ public class BungeeServer implements Receiver {
 
     /* OVERRIDABLE MESSAGES */
     @Override
-    public void receiveMessage(Message message) {
-        serverChannel.receiveMessage(message);
+    public boolean receive(Message message) {
+       return serverChannel.receive(message);
     }
 
     @Override
