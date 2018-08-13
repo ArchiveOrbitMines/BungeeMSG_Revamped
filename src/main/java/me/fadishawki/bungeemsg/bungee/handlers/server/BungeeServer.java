@@ -21,7 +21,7 @@ public class BungeeServer implements Receiver {
 
     public BungeeServer(ServerInfo server, String name){
         this.players = new ArrayList<>();
-        this.serverChannel = new Channel("channel_" + name);
+        this.serverChannel = new Channel(Channel.Type.SERVER, "channel_" + name, ' ');
         this.server = server;
         this.name = name;
     }
@@ -29,10 +29,12 @@ public class BungeeServer implements Receiver {
     /* PLAYER METHODS */
     public void join(BungeePlayer player){
         players.add(player);
+        serverChannel.join(player);
     }
 
     public void leave(BungeePlayer player){
         players.remove(player);
+        serverChannel.leave(player);
     }
 
     /* GETTERS */
@@ -55,7 +57,7 @@ public class BungeeServer implements Receiver {
     }
 
     @Override
-    public Type getType() {
+    public Type getReceiverType() {
         return Type.SERVER;
     }
 }

@@ -25,7 +25,7 @@ public class ChatMessage implements Message.Instance {
     @Override
     public boolean send(Receiver receiver) {
         //TODO: PERHAPS CHANGE SOME & ADD A FORMAT! (MSG: [name] >> [you] : message) (CHANNEL: [name] : message)
-        switch (receiver.getType()) {
+        switch (receiver.getReceiverType()) {
             case PLAYER: {
                 BungeePlayer player = (BungeePlayer) receiver;
                 player.getPlayer().sendMessage(new TextComponent(message));
@@ -57,5 +57,10 @@ public class ChatMessage implements Message.Instance {
     @Override
     public JSONObject serialize() {
         return null;
+    }
+
+    /* GETTERS */
+    public String getMessage() {
+        return message;
     }
 }

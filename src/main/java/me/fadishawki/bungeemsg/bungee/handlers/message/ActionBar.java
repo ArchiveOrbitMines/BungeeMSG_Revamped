@@ -39,7 +39,7 @@ public class ActionBar implements Message.Instance {
 
     @Override
     public boolean send(Receiver receiver) {
-        switch(receiver.getType()) {
+        switch(receiver.getReceiverType()) {
             case PLAYER: {
                 BungeePlayer player = (BungeePlayer) receiver;
                 player.getPlayer().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
@@ -83,6 +83,10 @@ public class ActionBar implements Message.Instance {
         for (BungeePlayer player : players) {
             new Instance(player.getPlayer(), message, stay).send();
         }
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public class Instance {

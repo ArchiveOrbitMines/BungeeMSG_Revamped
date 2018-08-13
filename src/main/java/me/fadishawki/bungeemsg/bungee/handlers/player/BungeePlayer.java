@@ -1,9 +1,11 @@
 package me.fadishawki.bungeemsg.bungee.handlers.player;
 
+import me.fadishawki.bungeemsg.bungee.BungeeMSG;
 import me.fadishawki.bungeemsg.bungee.handlers.Message;
 import me.fadishawki.bungeemsg.bungee.handlers.Receiver;
 import me.fadishawki.bungeemsg.bungee.handlers.Sender;
 import me.fadishawki.bungeemsg.bungee.handlers.channel.Channel;
+import me.fadishawki.bungeemsg.bungee.handlers.message.ChatMessage;
 import me.fadishawki.bungeemsg.bungee.handlers.server.BungeeServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -32,7 +34,9 @@ public class BungeePlayer implements Receiver, Sender {
         this.server = server;
         if (this.server != null) {
             this.player.setReconnectServer(server.getServer());
-            this.currentChannel = server.getServerChannel();
+            if(currentChannel.getChannelType() == Channel.Type.SERVER && !currentChannel.equals(server.getServerChannel())) {
+                this.currentChannel = server.getServerChannel();
+            }
             this.server.join(this);
         }
     }
@@ -47,24 +51,52 @@ public class BungeePlayer implements Receiver, Sender {
         return player;
     }
 
-    public BungeeServer getConnectedServer(){
+    public BungeeServer getServer(){
         return server;
     }
 
-    public Channel getCurrentChannel() {
+    public Channel getChannel() {
         return currentChannel;
     }
 
     /* OVERRIDABLE METHODS */
     @Override
     public boolean receive(Message message) {
-
-        return false;
+        return message.send();
     }
 
     @Override
-    public Type getType() {
-        return Type.PLAYER;
+    public Receiver.Type getReceiverType() {
+        return Receiver.Type.PLAYER;
+    }
+
+    @Override
+    public boolean send(Receiver receiver, Message.Instance... instances) {
+        for(Message.Instance instance : instances){
+            switch(instance.getType()){
+                case CHAT: {
+                    //TODO: PERHAPS FIND ANOTHER SOLUTION FOR THIS...
+                    char symbol = ((ChatMessage) instance).getMessage().charAt(0);
+                    for(Channel channel : BungeeMSG.getInstance().getChannels()){
+                        if(channel.hasSymbol() && channel.isSymbol(symbol) && !channel.isMuted()){
+                            receiver = channel;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+        Message message = new Message(this, receiver, instances);
+        message.send();
+        return true;
+    }
+
+    @Override
+    public Sender.Type getSenderType() {
+        return Sender.Type.PLAYER;
     }
 
     /* STATIC METHODS */

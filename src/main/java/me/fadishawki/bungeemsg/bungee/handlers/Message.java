@@ -40,6 +40,10 @@ public class Message {
         return sender;
     }
 
+    public Instance[] getInstances(){
+        return instances;
+    }
+
     public interface Instance {
 
         Type getType();

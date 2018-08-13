@@ -6,4 +6,13 @@ package me.fadishawki.bungeemsg.bungee.handlers;
 
 public interface Sender {
 
+    boolean send(Receiver receiver, Message.Instance... instance);
+
+    Type getSenderType();
+
+    enum Type {
+
+        PLAYER;
+
+    }
 }

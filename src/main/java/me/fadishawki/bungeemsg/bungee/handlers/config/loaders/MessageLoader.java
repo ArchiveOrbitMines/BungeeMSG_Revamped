@@ -39,7 +39,7 @@ public class MessageLoader extends ConfigLoader {
 
             instances.add(new ChatMessage(message) {
                 @Override
-                public void adjustFilter(Filter filter) {
+                public boolean adjustFilter(Filter filter) {
                     throw new IllegalStateException();
                 }
 
@@ -64,7 +64,7 @@ public class MessageLoader extends ConfigLoader {
 
             instances.add(new MessageList(messageList) {
                 @Override
-                public void adjustFilter(Filter filter) {
+                public boolean adjustFilter(Filter filter) {
                     throw new IllegalStateException();
                 }
 
@@ -89,7 +89,7 @@ public class MessageLoader extends ConfigLoader {
 
             instances.add(new MessageList(messageList) {
                 @Override
-                public void adjustFilter(Filter filter) {
+                public boolean adjustFilter(Filter filter) {
                     throw new IllegalStateException();
                 }
 

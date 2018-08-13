@@ -23,9 +23,9 @@ public class Title implements Message.Instance {
     public Title(String title, String subTitle, int fadeIn, int stay, int fadeOut) {
         this.title = title;
         this.subTitle = subTitle;
-        this.fadeIn = fadeIn;
-        this.stay = stay;
-        this.fadeOut = fadeOut;
+        this.fadeIn = fadeIn * 20;
+        this.stay = stay * 20;
+        this.fadeOut = fadeOut * 20;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Title implements Message.Instance {
     /* OVERRIDABLE METHODS */
     @Override
     public boolean send(Receiver receiver) {
-        switch (receiver.getType()) {
+        switch (receiver.getReceiverType()) {
             case PLAYER: {
                 send(Collections.singletonList((BungeePlayer) receiver));
                 break;
@@ -68,5 +68,13 @@ public class Title implements Message.Instance {
         for (BungeePlayer player : players) {
             player.getPlayer().sendTitle(BungeeMSG.getInstance().getProxy().createTitle().title().title(new TextComponent(this.title)).subTitle(new TextComponent(this.subTitle)).fadeIn(fadeIn).fadeOut(fadeOut).stay(stay));
         }
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
     }
 }

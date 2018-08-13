@@ -4,7 +4,7 @@ public interface Receiver {
 
     boolean receive(Message message);
 
-    Type getType();
+    Type getReceiverType();
 
     enum Type {
 
