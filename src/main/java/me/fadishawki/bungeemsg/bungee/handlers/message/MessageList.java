@@ -12,7 +12,7 @@ public class MessageList implements Message.Type {
 
     private List<ChatMessage> messages;
 
-    public MessageList() {
+    public MessageList(List<ChatMessage> messages) {
         this.messages = new ArrayList<>();
     }
 
@@ -28,14 +28,20 @@ public class MessageList implements Message.Type {
     }
 
     @Override
-    public void adjustFilter(Filter filter) {
+    public boolean adjustFilter(Filter filter) {
+        boolean modified = false;
         for(ChatMessage message : messages){
-            message.adjustFilter(filter);
+            modified = message.adjustFilter(filter);
         }
+        return modified;
     }
 
     @Override
     public JSONObject serialize() {
         return null; //TODO!
+    }
+
+    public void addChatMessage(ChatMessage message){
+        this.messages.add(message);
     }
 }

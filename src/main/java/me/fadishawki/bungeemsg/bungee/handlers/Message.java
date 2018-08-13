@@ -47,7 +47,7 @@ public class Message {
 
         boolean send(Receiver receiver);
 
-        void adjustFilter(Filter filter);
+        boolean adjustFilter(Filter filter);
 
         JSONObject serialize();
 

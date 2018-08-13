@@ -33,6 +33,7 @@ public class BungeePlayer implements Receiver, Sender {
         if (this.server != null) {
             this.player.setReconnectServer(server.getServer());
             this.currentChannel = server.getServerChannel();
+            this.server.join(this);
         }
     }
 
@@ -64,11 +65,6 @@ public class BungeePlayer implements Receiver, Sender {
     @Override
     public Type getType() {
         return Type.PLAYER;
-    }
-
-    @Override
-    public boolean send(Message message) {
-        return message.send();
     }
 
     /* STATIC METHODS */

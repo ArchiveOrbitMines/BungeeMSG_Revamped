@@ -14,23 +14,22 @@ public abstract class Filter {
         this.bannedWords = bannedWords;
     }
 
-    public String getMessage(String message) {
+    public boolean filter(String message) {
+        boolean modified = false;
         for (String word : bannedWords.keySet()) {
             if (message.contains(word)) {
                 message = message.replaceAll(word, getReplacement(word));
+                modified = true;
             }
             List<String> variations = new ArrayList<>();
             variations.addAll(checkAlias(word, message));
             variations.addAll(checkVariations(word, message));
             for (String variation : variations) {
                 message = message.replaceAll(variation, getReplacement(variation));
+                modified = true;
             }
         }
-        return message;
-    }
-
-    public boolean isModified(String message) {
-        return message.contains("***"); //TODO!
+        return modified;
     }
 
     private String getReplacement(String word) {
