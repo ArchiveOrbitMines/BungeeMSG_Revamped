@@ -1,19 +1,15 @@
 package me.fadishawki.bungeemsg.bungee.handlers.message;
 
-/*
- * OrbitMines - @author Fadi Shawki - 2018
- */
-
 import me.fadishawki.bungeemsg.bungee.handlers.Message;
 import me.fadishawki.bungeemsg.bungee.handlers.Receiver;
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
 import org.json.simple.JSONObject;
 
-public class ActionBar implements Message.Type {
+public class ChatMessage implements Message.Type {
 
     private String message;
 
-    public ActionBar(String message){
+    public ChatMessage(String message){
         this.message = message;
     }
 

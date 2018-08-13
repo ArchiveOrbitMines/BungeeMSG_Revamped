@@ -9,37 +9,38 @@ import java.util.List;
 public class Message {
 
     private Receiver receiver;
-    private BungeePlayer sender;
+    private Sender sender;
 
-    private List<Type> types;
+    private Message.Type[] types;
 
-    private boolean modified;
-
-    public Message(BungeePlayer sender, Receiver receiver, String message){
-        this.message = message;
+    public Message(Sender sender, Receiver receiver, Message.Type... types){
         this.receiver = receiver;
         this.sender =  sender;
+        this.types = types;
     }
-    
+
+    /* MESSAGE - METHODS */
     public void adjustFilter(Filter filter){
-        this.message = filter.getMessage(message);
-        this.modified = filter.isModified(message);
+        for(Type type : types){
+            type.adjustFilter(filter);
+        }
     }
 
-    public String getMessage(){
-        return message;
+    public boolean send(){
+        boolean sent = true;
+        for(Type type : types){
+            sent = type.send(receiver);
+        }
+        return sent;
     }
 
+    /* GETTERS */
     public Receiver getReceiver() {
         return receiver;
     }
 
-    public BungeePlayer getSender() {
+    public Sender getSender() {
         return sender;
-    }
-
-    public boolean isFiltered() {
-        return modified;
     }
 
     public interface Type {

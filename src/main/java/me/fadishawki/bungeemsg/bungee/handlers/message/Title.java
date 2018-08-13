@@ -1,26 +1,22 @@
 package me.fadishawki.bungeemsg.bungee.handlers.message;
 
-/*
- * OrbitMines - @author Fadi Shawki - 2018
- */
-
 import me.fadishawki.bungeemsg.bungee.handlers.Message;
 import me.fadishawki.bungeemsg.bungee.handlers.Receiver;
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
 import org.json.simple.JSONObject;
 
-public class ActionBar implements Message.Type {
+public class Title implements Message.Type {
 
-    private String message;
+    private String title;
+    private String subTitle;
 
-    public ActionBar(String message){
-        this.message = message;
+    public Title(String title, String subTitle){
+        this.title = title;
+        this.subTitle = subTitle;
     }
-
 
     @Override
     public boolean send(Receiver receiver) {
-
         return false;
     }
 
