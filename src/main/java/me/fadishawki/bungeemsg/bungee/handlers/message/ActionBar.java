@@ -11,6 +11,7 @@ import me.fadishawki.bungeemsg.bungee.handlers.channel.Channel;
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
 import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
 import me.fadishawki.bungeemsg.bungee.handlers.server.BungeeServer;
+import me.fadishawki.bungeemsg.bungee.handlers.variables.Variable;
 import me.fadishawki.bungeemsg.bungee.runnables.BungeeRunnable;
 import me.fadishawki.bungeemsg.bungee.runnables.Timer;
 import net.md_5.bungee.api.ChatMessageType;
@@ -28,8 +29,13 @@ public class ActionBar implements Message.Instance {
 
     private int stay;
 
-    public ActionBar(String message){
+    public ActionBar(String message, int stay){
         this.message = message;
+        this.stay = stay;
+    }
+
+    public ActionBar(ActionBar actionBar){
+        this(actionBar.message, actionBar.stay);
     }
 
     @Override
@@ -69,8 +75,18 @@ public class ActionBar implements Message.Instance {
     }
 
     @Override
+    public boolean hasVariable(Variable variable) {
+        return message.contains(variable.getVariable());
+    }
+
+    @Override
     public JSONObject serialize() {
         return null;
+    }
+
+    @Override
+    public Message.Instance copy() {
+        return new ActionBar(this);
     }
 
     /* SETTERS */

@@ -1,5 +1,5 @@
 name: BungeeMSG
-main: me.fadishawki.bungeemsg.spigot.SpigotBridge
-authors: [Fadi Shawki]
-version: 1.0.0
-commands:
+authors: [Fadi Shawki, Robin Egberts]
+version: 3.0.0
+description: BungeeMSG by Fadi Shawki & Robin Egberts - OrbitMines
+main: me.fadishawki.bungeemsg.bungee.BungeeMSG

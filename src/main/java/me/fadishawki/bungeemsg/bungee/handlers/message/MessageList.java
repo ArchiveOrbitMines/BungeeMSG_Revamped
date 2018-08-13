@@ -3,6 +3,7 @@ package me.fadishawki.bungeemsg.bungee.handlers.message;
 import me.fadishawki.bungeemsg.bungee.handlers.Message;
 import me.fadishawki.bungeemsg.bungee.handlers.Receiver;
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
+import me.fadishawki.bungeemsg.bungee.handlers.variables.Variable;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
@@ -17,6 +18,14 @@ public class MessageList implements Message.Instance {
 
         for (String message : messages) {
             this.messages.add(new ChatMessage(message));
+        }
+    }
+
+    public MessageList(MessageList messageList) {
+        this.messages = new ArrayList<>();
+
+        for (ChatMessage message : messageList.messages) {
+            messages.add((ChatMessage) message.copy());
         }
     }
 
@@ -48,6 +57,20 @@ public class MessageList implements Message.Instance {
     @Override
     public JSONObject serialize() {
         return null; //TODO!
+    }
+
+    @Override
+    public boolean hasVariable(Variable variable) {
+        for (ChatMessage message : messages) {
+            if (message.hasVariable(variable))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Message.Instance copy() {
+        return new MessageList(this);
     }
 
     public void addChatMessage(ChatMessage message) {
