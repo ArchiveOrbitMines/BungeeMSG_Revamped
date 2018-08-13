@@ -6,6 +6,4 @@ package me.fadishawki.bungeemsg.bungee.handlers;
 
 public interface Sender {
 
-    boolean send(Message message);
-
 }
