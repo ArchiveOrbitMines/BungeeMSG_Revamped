@@ -13,7 +13,8 @@ public abstract class ProxiedPlayerRunnable {
     
     private Map<Long, List<ProxiedPlayerRunnable>> playerRunnables = new HashMap<>();
 
-    protected Plugin plugin;
+    protected final Plugin plugin;
+
     private BungeeRunnable.Time time;
     private ScheduledTask task;
 

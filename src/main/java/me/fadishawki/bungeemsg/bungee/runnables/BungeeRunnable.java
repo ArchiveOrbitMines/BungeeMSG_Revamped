@@ -12,7 +12,7 @@ public abstract class BungeeRunnable {
 
     private Map<Long, List<BungeeRunnable>> runnables = new HashMap<>();
 
-    protected Plugin plugin;
+    protected final Plugin plugin;
     private Time time;
     private ScheduledTask task;
 

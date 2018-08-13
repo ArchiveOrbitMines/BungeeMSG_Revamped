@@ -18,11 +18,14 @@ public class Title implements Message.Type {
     private String title;
     private String subTitle;
 
-    private int fadeIn, fadeOut, stay;
+    private int fadeIn, stay, fadeOut;
 
-    public Title(String title, String subTitle) {
+    public Title(String title, String subTitle, int fadeIn, int stay, int fadeOut) {
         this.title = title;
         this.subTitle = subTitle;
+        this.fadeIn = fadeIn;
+        this.stay = stay;
+        this.fadeOut = fadeOut;
     }
 
     /* OVERRIDABLE METHODS */
@@ -55,23 +58,10 @@ public class Title implements Message.Type {
         return null;
     }
 
-    /* SETTERS */
-    public void setFadeIn(int fadeIn) {
-        this.fadeIn = fadeIn;
-    }
-
-    public void setFadeOut(int fadeOut) {
-        this.fadeOut = fadeOut;
-    }
-
-    public void stay(int stay) {
-        this.stay = stay;
-    }
-
     /* Send Title */
     private void send(Collection<? extends BungeePlayer> players) {
         for (BungeePlayer player : players) {
-            player.getPlayer().sendTitle(BungeeMSG.getProxyServer().createTitle().title().title(new TextComponent(this.title)).subTitle(new TextComponent(this.subTitle)).fadeIn(fadeIn).fadeOut(fadeOut).stay(stay));
+            player.getPlayer().sendTitle(BungeeMSG.getInstance().getProxy().createTitle().title().title(new TextComponent(this.title)).subTitle(new TextComponent(this.subTitle)).fadeIn(fadeIn).fadeOut(fadeOut).stay(stay));
         }
     }
 }
