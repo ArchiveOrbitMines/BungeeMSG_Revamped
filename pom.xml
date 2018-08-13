@@ -17,66 +17,13 @@
             <id>maven-repo</id>
             <url>http://central.maven.org/maven2/</url>
         </repository>
+        <repository>
+            <id>bstats-repo</id>
+            <url>http://repo.bstats.org/content/repositories/releases/</url>
+        </repository>
     </repositories>
 
     <dependencies>
-
-        <dependency>
-            <groupId>spigotmc.org</groupId>
-            <artifactId>spigot-server-1.12.2</artifactId>
-            <version>1.12.2-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/spigot-1.12.2.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>spigotmc.org</groupId>
-            <artifactId>spigot-server-1.11</artifactId>
-            <version>1.11-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/spigot-1.11.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>spigotmc.org</groupId>
-            <artifactId>spigot-server-1.10</artifactId>
-            <version>1.10-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/spigot-1.10.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>spigotmc.org</groupId>
-            <artifactId>spigot-server-1.9.4</artifactId>
-            <version>1.9.4-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/spigot-1.9.4.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>spigotmc.org</groupId>
-            <artifactId>spigot-server-1.9</artifactId>
-            <version>1.9-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/spigot-1.9.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>spigotmc.org</groupId>
-            <artifactId>spigot-server-1.8.8</artifactId>
-            <version>1.8.8-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/spigot-1.8.8.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>spigotmc.org</groupId>
-            <artifactId>spigot-server-1.8.3</artifactId>
-            <version>1.8.3-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/spigot-1.8.3.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>spigotmc.org</groupId>
-            <artifactId>spigot-server-1.8</artifactId>
-            <version>1.8-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/spigot-1.8.jar</systemPath>
-        </dependency>
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
@@ -90,6 +37,12 @@
             <version>1.12-SNAPSHOT</version>
             <type>javadoc</type>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bungeecord</artifactId>
+            <version>1.2</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
