@@ -93,4 +93,8 @@ public class BungeePlayer implements Receiver, Sender {
     public static BungeePlayer getPlayer(ProxiedPlayer player){
         return getPlayer(player.getUniqueId());
     }
+
+    public static List<BungeePlayer> getPlayers() {
+        return players;
+    }
 }
