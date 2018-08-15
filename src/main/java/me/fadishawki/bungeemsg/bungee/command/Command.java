@@ -1,4 +1,4 @@
-package me.fadishawki.bungeemsg.bungee;
+package me.fadishawki.bungeemsg.bungee.command;
 
 import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
 
