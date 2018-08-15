@@ -4,6 +4,7 @@ package me.fadishawki.bungeemsg.bungee;
  * OrbitMines - @author Fadi Shawki - 2018
  */
 
+import me.fadishawki.bungeemsg.bungee.command.Command;
 import me.fadishawki.bungeemsg.bungee.handlers.channel.Channel;
 import me.fadishawki.bungeemsg.bungee.handlers.server.BungeeServer;
 import net.md_5.bungee.api.ProxyServer;
@@ -20,6 +21,7 @@ public class BungeeMSG extends Plugin {
 
     private Metrics metrics;
 
+    private List<Command> commands;
     private List<BungeeServer> servers;
     private List<Channel> channels;
 
