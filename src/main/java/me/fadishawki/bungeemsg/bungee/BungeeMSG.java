@@ -34,6 +34,7 @@ public class BungeeMSG extends Plugin {
 
         this.servers = new ArrayList<>();
         this.channels = new ArrayList<>();
+        this.commands = new ArrayList<>();
     }
 
     public static BungeeMSG getInstance() {
