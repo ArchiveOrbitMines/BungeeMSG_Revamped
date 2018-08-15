@@ -79,7 +79,9 @@ public class BungeePlayer implements Receiver, Sender {
                     char symbol = ((ChatMessage) instance).getMessage().charAt(0);
                     for(Channel channel : BungeeMSG.getInstance().getChannels()){
                         if(channel.hasSymbol() && channel.isSymbol(symbol) && !channel.isMuted()){
-                            receiver = channel;
+                            if(player.hasPermission(channel.getPermission())){
+                                receiver = channel;
+                            }
                             break;
                         }
                     }

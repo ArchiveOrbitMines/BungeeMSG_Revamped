@@ -13,6 +13,7 @@ public class Channel implements Receiver {
 
     private Type type;
 
+    private String permission;
     private String name;
 
     private boolean muted;
@@ -22,6 +23,7 @@ public class Channel implements Receiver {
     public Channel(Type type, String name, char symbol) {
         this.name = name;
         this.type = type;
+        this.permission = null;
         this.muted = false;
         this.listeners = new ArrayList<>();
         this.chatSymbol = symbol;
@@ -48,6 +50,10 @@ public class Channel implements Receiver {
         return type;
     }
 
+    public String getPermission() {
+        return permission;
+    }
+
     /* BOOLEANS */
     public boolean hasSymbol(){
         return chatSymbol != ' ';
@@ -64,6 +70,10 @@ public class Channel implements Receiver {
     /* SETTERS */
     public void setMuted(boolean muted){
         this.muted = muted;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
     /* OVERRIDABLE METHODS */

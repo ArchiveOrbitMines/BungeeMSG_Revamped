@@ -28,13 +28,13 @@ public class BungeeServer implements Receiver {
 
     /* PLAYER METHODS */
     public void join(BungeePlayer player){
-        players.add(player);
-        serverChannel.join(player);
+        this.players.add(player);
+        this.serverChannel.join(player);
     }
 
     public void leave(BungeePlayer player){
-        players.remove(player);
-        serverChannel.leave(player);
+        this.players.remove(player);
+        this.serverChannel.leave(player);
     }
 
     /* GETTERS */
@@ -48,6 +48,10 @@ public class BungeeServer implements Receiver {
 
     public ServerInfo getServer() {
         return server;
+    }
+
+    public List<BungeePlayer> getPlayers() {
+        return players;
     }
 
     /* OVERRIDABLE MESSAGES */
