@@ -1,20 +1,43 @@
+#
+#  BungeeMSG - Announcers
+#  Setup announcers that will broadcast to all servers, or specific servers on a certain interval.
+#
+
+# Set this to 'false' in order to disable the Announcers.
 Use: true
 
-JoinMessage:
-
-
 Announcers:
+  # The name of the announcer, doesn't really matter what you put here, this is just for you.
   'New Features':
+
+    # What servers should the announcer broadcast to, put them here in a list. Use [ALL] in order to broadcast to all servers.
     Servers:
     - '[ALL]'
+
+    # The interval at which the announcer should broadcast the next message.
     Interval: 180
 
+    # A list of all the messages that will be broadcasted.
     Messages:
       '1':
+#        ActionBar:
+#          ActionBar: '&6&lBungee&c&lMSG &8- Auto Announcers'
+#          Stay: 5
+
+#        Message: ' &6&lBungee&c&lMSG &8- Auto Announcers'
+
         MessageList:
           - ''
           - ' &6&lBungee&c&lMSG &8- &dAuto Announcers'
           - ''
+
+#        Title:
+#          Title: '&6&lBungee&c&lMSG'
+#          SubTitle: '&dAuto Announcers'
+#          FadeIn: 1
+#          Stay: 4
+#          FadeOut: 1
+
       '2':
         MessageList:
           - ''

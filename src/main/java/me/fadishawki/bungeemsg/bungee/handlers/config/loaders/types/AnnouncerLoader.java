@@ -9,7 +9,10 @@ import me.fadishawki.bungeemsg.bungee.handlers.Message;
 import me.fadishawki.bungeemsg.bungee.handlers.config.Config;
 import me.fadishawki.bungeemsg.bungee.handlers.config.ConfigHandler;
 import me.fadishawki.bungeemsg.bungee.handlers.config.ConfigLoader;
-import me.fadishawki.bungeemsg.bungee.handlers.config.loaders.*;
+import me.fadishawki.bungeemsg.bungee.handlers.config.loaders.BooleanLoader;
+import me.fadishawki.bungeemsg.bungee.handlers.config.loaders.EntryLoader;
+import me.fadishawki.bungeemsg.bungee.handlers.config.loaders.IntegerLoader;
+import me.fadishawki.bungeemsg.bungee.handlers.config.loaders.StringListLoader;
 import me.fadishawki.bungeemsg.bungee.handlers.config.loaders.message.EntryMessageLoader;
 import me.fadishawki.bungeemsg.bungee.handlers.config.loaders.message.MessageLoader;
 import net.md_5.bungee.config.Configuration;
@@ -22,6 +25,16 @@ public class AnnouncerLoader extends EntryLoader<Announcer, AnnouncerLoader.Entr
         super(type, AnnouncerLoader.Entry.class, "Announcements");
 
         useLoader = new BooleanLoader(type, "Use");
+    }
+
+    @Override
+    public boolean load(ConfigHandler handler, Config.Type type) {
+        /* On pre-reload, stop all announcements */
+        for (Announcer announcer : getValue()) {
+            announcer.cancel();
+        }
+
+        return super.load(handler, type);
     }
 
     @Override
@@ -56,16 +69,6 @@ public class AnnouncerLoader extends EntryLoader<Announcer, AnnouncerLoader.Entr
         }
 
         @Override
-        public boolean load(ConfigHandler handler, Config.Type type) {
-            /* On pre-reload, stop all announcements */
-            for (Announcer announcer : AnnouncerLoader.this.getValue()) {
-                //TODO announcer.cancel();
-            }
-
-            return super.load(handler, type);
-        }
-
-        @Override
         public boolean load(Configuration configuration) {
             if (!serversLoader.load(configuration))
                 return false;
@@ -74,7 +77,7 @@ public class AnnouncerLoader extends EntryLoader<Announcer, AnnouncerLoader.Entr
             if (!announcementLoader.load(configuration))
                 return false;
 
-            this.value = new Announcer();//TODO New Announcer
+            this.value = new Announcer(key, serversLoader.getValue(), intervalLoader.getValue(), announcementLoader.getValue());
 
             return true;
         }

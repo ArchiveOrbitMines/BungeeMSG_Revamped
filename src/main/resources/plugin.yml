@@ -1,5 +1,5 @@
 name: BungeeMSG
-authors: [Fadi Shawki, Robin Egberts]
+author: Fadi Shawki & Robin Egberts
 version: 3.0.0
 description: BungeeMSG by Fadi Shawki & Robin Egberts - OrbitMines
 main: me.fadishawki.bungeemsg.bungee.BungeeMSG

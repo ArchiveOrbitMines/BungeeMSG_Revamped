@@ -20,7 +20,7 @@ public class BungeePlayer implements Receiver, Sender {
 
     private ProxiedPlayer player;
 
-    public BungeePlayer(ProxiedPlayer player){
+    public BungeePlayer(ProxiedPlayer player) {
         this.player = player;
     }
 
@@ -32,22 +32,21 @@ public class BungeePlayer implements Receiver, Sender {
         this.server = server;
         if (this.server != null) {
             this.player.setReconnectServer(server.getServer());
-            this.currentChannel = server.getServerChannel();
             this.server.join(this);
         }
     }
 
-    public void disconnect(){
+    public void disconnect() {
         this.server.leave(this);
         this.server = null;
     }
 
     /* GETTERS */
-    public ProxiedPlayer getPlayer(){
+    public ProxiedPlayer getPlayer() {
         return player;
     }
 
-    public BungeeServer getConnectedServer(){
+    public BungeeServer getConnectedServer() {
         return server;
     }
 
@@ -55,11 +54,21 @@ public class BungeePlayer implements Receiver, Sender {
         return currentChannel;
     }
 
+    public void setCurrentChannel(Channel currentChannel) {
+        this.currentChannel = currentChannel;
+    }
+
     /* OVERRIDABLE METHODS */
     @Override
     public boolean receive(Message message) {
+        if (!message.applyVariables(this))
+            return false;
+//        if (!message.adjustFilter(null))//TODO
+//            return false;
+        if (!message.send(this))
+            return false;
 
-        return false;
+        return true;
     }
 
     @Override
@@ -68,25 +77,25 @@ public class BungeePlayer implements Receiver, Sender {
     }
 
     /* STATIC METHODS */
-    public static BungeePlayer getPlayer(String name){
-        for(BungeePlayer player : players){
-            if(name.equals(player.getPlayer().getName())){
+    public static BungeePlayer getPlayer(String name) {
+        for (BungeePlayer player : players) {
+            if (name.equals(player.getPlayer().getName())) {
                 return player;
             }
         }
         return null;
     }
 
-    public static BungeePlayer getPlayer(UUID id){
-        for(BungeePlayer player : players){
-            if(player.getPlayer().getUniqueId().equals(id)){
+    public static BungeePlayer getPlayer(UUID id) {
+        for (BungeePlayer player : players) {
+            if (player.getPlayer().getUniqueId().equals(id)) {
                 return player;
             }
         }
         return null;
     }
 
-    public static BungeePlayer getPlayer(ProxiedPlayer player){
+    public static BungeePlayer getPlayer(ProxiedPlayer player) {
         return getPlayer(player.getUniqueId());
     }
 

@@ -36,16 +36,8 @@ public abstract class Timer extends Cooldown {
         this.plugin = plugin;
 
         this.interval = interval;
-        totalSeconds = cooldown.getSeconds();
-        remainingSeconds = totalSeconds;
-        intervalSeconds = 0;
 
-        if (delay == -1) {
-            startRunnable();
-            return;
-        }
-
-        ProxyServer.getInstance().getScheduler().schedule(plugin, this::startRunnable, delay, java.util.concurrent.TimeUnit.SECONDS);
+        restart(delay);
     }
 
     /* Called on Finish */
@@ -76,7 +68,29 @@ public abstract class Timer extends Cooldown {
         return totalSeconds;
     }
 
+    public void restart() {
+        restart(-1);
+    }
+
+    public void restart(long delay) {
+        totalSeconds = cooldown / 1000;
+        remainingSeconds = totalSeconds;
+        intervalSeconds = 0;
+
+        if (delay == -1) {
+            startRunnable();
+            return;
+        }
+
+        ProxyServer.getInstance().getScheduler().schedule(plugin, this::startRunnable, delay, java.util.concurrent.TimeUnit.SECONDS);
+    }
+
     private void startRunnable() {
+        if (this.runnable != null) {
+            runnable.restart();
+            return;
+        }
+
         long secondsPerInterval = interval.getSeconds();
 
         runnable = new BungeeRunnable(plugin, BungeeRunnable.TimeUnit.SECOND, 1) {
@@ -85,8 +99,8 @@ public abstract class Timer extends Cooldown {
                 remainingSeconds--;
 
                 if (remainingSeconds == 0) {
-                    onFinish();
                     cancel();
+                    onFinish();
                     return;
                 }
 

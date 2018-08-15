@@ -1,8 +1,8 @@
 package me.fadishawki.bungeemsg.bungee.handlers.message;
 
 import me.fadishawki.bungeemsg.bungee.handlers.Message;
-import me.fadishawki.bungeemsg.bungee.handlers.Receiver;
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
+import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
 import me.fadishawki.bungeemsg.bungee.handlers.variables.Variable;
 import org.json.simple.JSONObject;
 
@@ -35,12 +35,11 @@ public class MessageList implements Message.Instance {
     }
 
     @Override
-    public boolean send(Receiver receiver) {
+    public boolean send(BungeePlayer receiver) {
         boolean sent = true;
         for (ChatMessage message : messages) {
-            if (!message.send(receiver)) {
+            if (!message.send(receiver))
                 sent = false;
-            }
         }
         return sent;
     }
@@ -52,6 +51,12 @@ public class MessageList implements Message.Instance {
             modified = message.adjustFilter(filter);
         }
         return modified;
+    }
+
+    @Override
+    public boolean applyVariables(BungeePlayer receiver, Variable[] variables) {
+        //TODO
+        return true;
     }
 
     @Override

@@ -6,11 +6,8 @@ package me.fadishawki.bungeemsg.bungee.handlers.message;
 
 import me.fadishawki.bungeemsg.bungee.BungeeMSG;
 import me.fadishawki.bungeemsg.bungee.handlers.Message;
-import me.fadishawki.bungeemsg.bungee.handlers.Receiver;
-import me.fadishawki.bungeemsg.bungee.handlers.channel.Channel;
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
 import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
-import me.fadishawki.bungeemsg.bungee.handlers.server.BungeeServer;
 import me.fadishawki.bungeemsg.bungee.handlers.variables.Variable;
 import me.fadishawki.bungeemsg.bungee.runnables.BungeeRunnable;
 import me.fadishawki.bungeemsg.bungee.runnables.Timer;
@@ -19,7 +16,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.json.simple.JSONObject;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,34 +40,21 @@ public class ActionBar implements Message.Instance {
     }
 
     @Override
-    public boolean send(Receiver receiver) {
-        switch(receiver.getType()) {
-            case PLAYER: {
-                BungeePlayer player = (BungeePlayer) receiver;
-                player.getPlayer().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
-                break;
-            }
-            case CHANNEL: {
-                Channel channel = (Channel) receiver;
-                for(BungeePlayer player : channel.getPlayers()){
-                    player.getPlayer().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
-                }
-                break;
-            }
-            case SERVER: {
-                BungeeServer server = (BungeeServer) receiver;
-                for(BungeePlayer player : server.getServerChannel().getPlayers()){
-                    player.getPlayer().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
-                }
-                break;
-            }
-        }
+    public boolean send(BungeePlayer receiver) {
+        new Instance(receiver.getPlayer(), message, stay).send();
+
         return true;
     }
 
     @Override
     public boolean adjustFilter(Filter filter) {
         return filter.filter(message);
+    }
+
+    @Override
+    public boolean applyVariables(BungeePlayer receiver, Variable[] variables) {
+        //TODO
+        return true;
     }
 
     @Override
@@ -92,13 +75,6 @@ public class ActionBar implements Message.Instance {
     /* SETTERS */
     public void setStay(int stay) {
         this.stay = stay;
-    }
-
-    /* Send ActionBar */
-    private void send(Collection<? extends BungeePlayer> players) {
-        for (BungeePlayer player : players) {
-            new Instance(player.getPlayer(), message, stay).send();
-        }
     }
 
     public class Instance {

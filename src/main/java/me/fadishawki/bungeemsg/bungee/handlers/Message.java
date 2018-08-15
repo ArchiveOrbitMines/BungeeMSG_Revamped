@@ -5,6 +5,7 @@ import me.fadishawki.bungeemsg.bungee.handlers.message.ActionBar;
 import me.fadishawki.bungeemsg.bungee.handlers.message.ChatMessage;
 import me.fadishawki.bungeemsg.bungee.handlers.message.MessageList;
 import me.fadishawki.bungeemsg.bungee.handlers.message.Title;
+import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
 import me.fadishawki.bungeemsg.bungee.handlers.variables.Variable;
 import me.fadishawki.bungeemsg.bungee.utils.Utils;
 import net.md_5.bungee.config.Configuration;
@@ -58,18 +59,35 @@ public class Message {
     }
 
     /* MESSAGE - METHODS */
-    public void adjustFilter(Filter filter) {
+    public boolean adjustFilter(Filter filter) {
+        boolean success = true;
         for (Instance instance : instances) {
-            instance.adjustFilter(filter);
+            if (!instance.adjustFilter(filter))
+                success = false;
         }
+        return success;
+    }
+
+    public boolean applyVariables(BungeePlayer receiver) {
+        boolean success = true;
+        for (Instance instance : instances) {
+            if (!instance.applyVariables(receiver, variables))
+                success = false;
+        }
+        return success;
     }
 
     public boolean send() {
-        boolean sent = true;
+        return receiver.receive(this);
+    }
+
+    public boolean send(BungeePlayer receiver) {
+        boolean success = true;
         for (Instance instance : instances) {
-            sent = instance.send(receiver);
+            if (!instance.send(receiver))
+                success = false;
         }
-        return sent;
+        return success;
     }
 
     /* GETTERS */
@@ -81,6 +99,14 @@ public class Message {
         return sender;
     }
 
+    public Instance[] getInstances() {
+        return instances;
+    }
+
+    public Message copy() {
+        return new Message(sender, receiver, this);
+    }
+
     public Message copy(Sender sender, Receiver receiver) {
         return new Message(sender, receiver, this);
     }
@@ -89,9 +115,11 @@ public class Message {
 
         Type getType();
 
-        boolean send(Receiver receiver);
+        boolean send(BungeePlayer receiver);
 
         boolean adjustFilter(Filter filter);
+
+        boolean applyVariables(BungeePlayer receiver, Variable[] variables);
 
         boolean hasVariable(Variable variable);
 
@@ -115,7 +143,7 @@ public class Message {
                     }
 
                     @Override
-                    public boolean send(Receiver receiver) {
+                    public boolean send(BungeePlayer receiver) {
                         throw new IllegalStateException();
                     }
 
@@ -139,7 +167,7 @@ public class Message {
                     }
 
                     @Override
-                    public boolean send(Receiver receiver) {
+                    public boolean send(BungeePlayer receiver) {
                         throw new IllegalStateException();
                     }
 
@@ -165,7 +193,7 @@ public class Message {
                     }
 
                     @Override
-                    public boolean send(Receiver receiver) {
+                    public boolean send(BungeePlayer receiver) {
                         throw new IllegalStateException();
                     }
 
@@ -192,7 +220,7 @@ public class Message {
                     }
 
                     @Override
-                    public boolean send(Receiver receiver) {
+                    public boolean send(BungeePlayer receiver) {
                         throw new IllegalStateException();
                     }
 

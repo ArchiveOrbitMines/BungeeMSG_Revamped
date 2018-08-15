@@ -46,6 +46,11 @@ public abstract class BungeeRunnable {
         runnables.get(time.getSeconds()).remove(this);
     }
 
+    public void restart() {
+        if (!isRunning())
+            start();
+    }
+
     private void start() {
         long seconds = time.getSeconds();
 

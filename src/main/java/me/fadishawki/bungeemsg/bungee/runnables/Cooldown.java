@@ -5,7 +5,7 @@ package me.fadishawki.bungeemsg.bungee.runnables;
 */
 public class Cooldown {
 
-    private long cooldown;
+    protected long cooldown;
 
     public Cooldown(long cooldown) {
         this.cooldown = cooldown;

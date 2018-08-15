@@ -2,17 +2,11 @@ package me.fadishawki.bungeemsg.bungee.handlers.message;
 
 import me.fadishawki.bungeemsg.bungee.BungeeMSG;
 import me.fadishawki.bungeemsg.bungee.handlers.Message;
-import me.fadishawki.bungeemsg.bungee.handlers.Receiver;
-import me.fadishawki.bungeemsg.bungee.handlers.channel.Channel;
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
 import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
-import me.fadishawki.bungeemsg.bungee.handlers.server.BungeeServer;
 import me.fadishawki.bungeemsg.bungee.handlers.variables.Variable;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.json.simple.JSONObject;
-
-import java.util.Collection;
-import java.util.Collections;
 
 public class Title implements Message.Instance {
 
@@ -40,27 +34,27 @@ public class Title implements Message.Instance {
 
     /* OVERRIDABLE METHODS */
     @Override
-    public boolean send(Receiver receiver) {
-        switch (receiver.getType()) {
-            case PLAYER: {
-                send(Collections.singletonList((BungeePlayer) receiver));
-                break;
-            }
-            case CHANNEL: {
-                send(((Channel) receiver).getPlayers());
-                break;
-            }
-            case SERVER: {
-                send(((BungeeServer) receiver).getServerChannel().getPlayers());
-                break;
-            }
-        }
+    public boolean send(BungeePlayer receiver) {
+        receiver.getPlayer().sendTitle(BungeeMSG.getInstance().getProxy().createTitle().title()
+                .title(new TextComponent(this.title))
+                .subTitle(new TextComponent(this.subTitle))
+                .fadeIn(fadeIn * 20)
+                .fadeOut(fadeOut * 20)
+                .stay(stay * 20)
+        );
+
         return true;
     }
 
     @Override
     public boolean adjustFilter(Filter filter) {
         return filter.filter(title) && filter.filter(subTitle);
+    }
+
+    @Override
+    public boolean applyVariables(BungeePlayer receiver, Variable[] variables) {
+        //TODO
+        return true;
     }
 
     @Override
@@ -76,12 +70,5 @@ public class Title implements Message.Instance {
     @Override
     public Message.Instance copy() {
         return new Title(this);
-    }
-
-    /* Send Title */
-    private void send(Collection<? extends BungeePlayer> players) {
-        for (BungeePlayer player : players) {
-            player.getPlayer().sendTitle(BungeeMSG.getInstance().getProxy().createTitle().title().title(new TextComponent(this.title)).subTitle(new TextComponent(this.subTitle)).fadeIn(fadeIn * 20).fadeOut(fadeOut * 20).stay(stay * 20));
-        }
     }
 }

@@ -1,11 +1,8 @@
 package me.fadishawki.bungeemsg.bungee.handlers.message;
 
 import me.fadishawki.bungeemsg.bungee.handlers.Message;
-import me.fadishawki.bungeemsg.bungee.handlers.Receiver;
-import me.fadishawki.bungeemsg.bungee.handlers.channel.Channel;
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
 import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
-import me.fadishawki.bungeemsg.bungee.handlers.server.BungeeServer;
 import me.fadishawki.bungeemsg.bungee.handlers.variables.Variable;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.json.simple.JSONObject;
@@ -28,35 +25,21 @@ public class ChatMessage implements Message.Instance {
     }
 
     @Override
-    public boolean send(Receiver receiver) {
-        //TODO: PERHAPS CHANGE SOME & ADD A FORMAT! (MSG: [name] >> [you] : message) (CHANNEL: [name] : message)
-        switch (receiver.getType()) {
-            case PLAYER: {
-                BungeePlayer player = (BungeePlayer) receiver;
-                player.getPlayer().sendMessage(new TextComponent(message));
-                break;
-            }
-            case CHANNEL: {
-                Channel channel = (Channel) receiver;
-                for (BungeePlayer player : channel.getPlayers()) {
-                    player.getPlayer().sendMessage(new TextComponent(message));
-                }
-                break;
-            }
-            case SERVER: {
-                BungeeServer server = (BungeeServer) receiver;
-                for (BungeePlayer player : server.getServerChannel().getPlayers()) {
-                    player.getPlayer().sendMessage(new TextComponent(message));
-                }
-                break;
-            }
-        }
-        return false;
+    public boolean send(BungeePlayer receiver) {
+        receiver.getPlayer().sendMessage(new TextComponent(message));
+
+        return true;
     }
 
     @Override
     public boolean adjustFilter(Filter filter) {
         return filter.filter(message);
+    }
+
+    @Override
+    public boolean applyVariables(BungeePlayer receiver, Variable[] variables) {
+        //TODO
+        return true;
     }
 
     @Override

@@ -28,10 +28,12 @@ public class Channel implements Receiver {
 
     @Override
     public boolean receive(Message message) {
-        for(BungeePlayer player : players){
-            player.receive(message);
+        boolean sent = true;
+        for (BungeePlayer player : players) {
+            if (!player.receive(message.copy()))
+                sent = false;
         }
-        return false;
+        return sent;
     }
 
     @Override
