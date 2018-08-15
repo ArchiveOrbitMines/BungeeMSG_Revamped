@@ -1,0 +1,44 @@
+Use: true
+
+JoinMessage:
+
+
+Announcers:
+  'New Features':
+    Servers:
+    - '[ALL]'
+    Interval: 180
+
+    Messages:
+      '1':
+        MessageList:
+          - ''
+          - ' &6&lBungee&c&lMSG &8- &dAuto Announcers'
+          - ''
+      '2':
+        MessageList:
+          - ''
+          - ' &6&lBungee&c&lMSG &7- &eThese will display every 180 seconds.'
+          - ''
+      '3':
+        MessageList:
+          - ''
+          - ' &6&lBungee&c&lMSG &7- &9In order to broadcast to all servers add [ALL] to the server list.'
+          - ''
+  'Hub & Survival':
+    Servers:
+    - 'hub'
+    - 'survival'
+    Interval: 120
+
+    Messages:
+      '1':
+        MessageList:
+          - ''
+          - ' &6&lBungee&c&lMSG &7- &bThese will only be shown in the Hub & Survival server.'
+          - ''
+      '2':
+        MessageList:
+          - ''
+          - ' &6&lBungee&c&lMSG &7- &3Hello %receiver%!'
+          - ''

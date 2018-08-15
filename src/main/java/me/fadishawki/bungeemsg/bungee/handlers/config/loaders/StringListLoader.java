@@ -8,19 +8,21 @@ import me.fadishawki.bungeemsg.bungee.handlers.config.Config;
 import me.fadishawki.bungeemsg.bungee.handlers.config.ConfigLoader;
 import net.md_5.bungee.config.Configuration;
 
-public class IntegerLoader extends ConfigLoader<Integer> {
+import java.util.List;
 
-    public IntegerLoader(Config.Type type, String path) {
+public class StringListLoader extends ConfigLoader<List<String>> {
+
+    public StringListLoader(Config.Type type, String path) {
         super(type, path);
     }
 
-    public IntegerLoader(Config.Type type, String path, String key) {
+    public StringListLoader(Config.Type type, String path, String key) {
         super(type, path, key);
     }
 
     @Override
     public boolean load(Configuration configuration) {
-        this.value = configuration.getInt(path);
+        this.value = configuration.getStringList(path);
         return true;
     }
 }

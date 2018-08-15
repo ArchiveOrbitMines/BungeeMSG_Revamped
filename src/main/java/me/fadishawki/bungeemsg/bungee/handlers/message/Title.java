@@ -7,6 +7,7 @@ import me.fadishawki.bungeemsg.bungee.handlers.channel.Channel;
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
 import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
 import me.fadishawki.bungeemsg.bungee.handlers.server.BungeeServer;
+import me.fadishawki.bungeemsg.bungee.handlers.variables.Variable;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.json.simple.JSONObject;
 
@@ -26,6 +27,10 @@ public class Title implements Message.Instance {
         this.fadeIn = fadeIn * 20;
         this.stay = stay * 20;
         this.fadeOut = fadeOut * 20;
+    }
+
+    public Title(Title title) {
+        this(title.title, title.subTitle, title.fadeIn, title.stay, title.fadeOut);
     }
 
     @Override
@@ -59,14 +64,24 @@ public class Title implements Message.Instance {
     }
 
     @Override
+    public boolean hasVariable(Variable variable) {
+        return title.contains(variable.getVariable()) || subTitle.contains(variable.getVariable());
+    }
+
+    @Override
     public JSONObject serialize() {
         return null;
+    }
+
+    @Override
+    public Message.Instance copy() {
+        return new Title(this);
     }
 
     /* Send Title */
     private void send(Collection<? extends BungeePlayer> players) {
         for (BungeePlayer player : players) {
-            player.getPlayer().sendTitle(BungeeMSG.getInstance().getProxy().createTitle().title().title(new TextComponent(this.title)).subTitle(new TextComponent(this.subTitle)).fadeIn(fadeIn).fadeOut(fadeOut).stay(stay));
+            player.getPlayer().sendTitle(BungeeMSG.getInstance().getProxy().createTitle().title().title(new TextComponent(this.title)).subTitle(new TextComponent(this.subTitle)).fadeIn(fadeIn * 20).fadeOut(fadeOut * 20).stay(stay * 20));
         }
     }
 

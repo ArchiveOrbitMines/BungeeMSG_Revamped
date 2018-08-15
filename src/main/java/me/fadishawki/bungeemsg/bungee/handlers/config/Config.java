@@ -5,6 +5,7 @@ package me.fadishawki.bungeemsg.bungee.handlers.config;
  */
 
 import com.google.common.base.Charsets;
+import me.fadishawki.bungeemsg.bungee.handlers.config.loaders.types.AnnouncerLoader;
 import me.fadishawki.bungeemsg.bungee.utils.ConsoleUtils;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -16,27 +17,31 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Config {
 
+    public static final AnnouncerLoader ANNOUNCERS = new AnnouncerLoader(Type.announcer_cfg);
+
     public enum Type {
 
-        ;
+        announcer_cfg;
 
         private final String path;
-        private final ConfigLoader[] loaders;
+        private final List<ConfigLoader> loaders;
 
-        Type(ConfigLoader... loaders) {
-            this(null, loaders);
+        Type() {
+            this(null);
         }
 
-        Type(String path, ConfigLoader... loaders) {
+        Type(String path) {
             this.path = path == null ? "" : "/" + path;
-            this.loaders = loaders;
+            this.loaders = new ArrayList<>();
         }
 
         /* GETTERS */
-        public ConfigLoader[] getLoaders() {
+        public List<ConfigLoader> getLoaders() {
             return loaders;
         }
 

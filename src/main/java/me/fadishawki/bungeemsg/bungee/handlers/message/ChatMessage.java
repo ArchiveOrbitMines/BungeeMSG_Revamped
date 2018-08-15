@@ -6,6 +6,7 @@ import me.fadishawki.bungeemsg.bungee.handlers.channel.Channel;
 import me.fadishawki.bungeemsg.bungee.handlers.filter.Filter;
 import me.fadishawki.bungeemsg.bungee.handlers.player.BungeePlayer;
 import me.fadishawki.bungeemsg.bungee.handlers.server.BungeeServer;
+import me.fadishawki.bungeemsg.bungee.handlers.variables.Variable;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.json.simple.JSONObject;
 
@@ -17,6 +18,10 @@ public class ChatMessage implements Message.Instance {
         this.message = message;
     }
 
+    public ChatMessage(ChatMessage chatMessage) {
+        this(chatMessage.message);
+    }
+
     @Override
     public Message.Type getType() {
         return Message.Type.CHAT;
@@ -25,7 +30,7 @@ public class ChatMessage implements Message.Instance {
     @Override
     public boolean send(Receiver receiver) {
         //TODO: PERHAPS CHANGE SOME & ADD A FORMAT! (MSG: [name] >> [you] : message) (CHANNEL: [name] : message)
-        switch (receiver.getReceiverType()) {
+        switch (receiver.getType()) {
             case PLAYER: {
                 BungeePlayer player = (BungeePlayer) receiver;
                 player.getPlayer().sendMessage(new TextComponent(message));
@@ -55,12 +60,17 @@ public class ChatMessage implements Message.Instance {
     }
 
     @Override
+    public boolean hasVariable(Variable variable) {
+        return message.contains(variable.getVariable());
+    }
+
+    @Override
     public JSONObject serialize() {
         return null;
     }
 
-    /* GETTERS */
-    public String getMessage() {
-        return message;
+    @Override
+    public Message.Instance copy() {
+        return new ChatMessage(this);
     }
 }
